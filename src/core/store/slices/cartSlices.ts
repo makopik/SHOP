@@ -7,18 +7,18 @@ interface CartItem extends Product {
 
 interface CartState {
   items: CartItem[];
-  totalItem: number;
+  itemsCount: number;
   totalPrice: number;
 }
 
 const initialState: CartState = {
   items: [],
-  totalItem: 0,
+  itemsCount: 0,
   totalPrice: 0,
 };
 
 const updateTotals = (state: CartState) => {
-  state.totalItem = state.items.reduce((sum, item) => sum + item.quantity, 0);
+  state.itemsCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
   state.totalPrice = state.items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
@@ -65,7 +65,7 @@ export const { addToCart, removeFromCart, updateQuantity, clearCart } =
   cartSlice.actions;
 
 export const selectTotalItems = (state: { cart: CartState }) =>
-  state.cart.totalItem;
+  state.cart.itemsCount;
 export const selectTotalPrice = (state: { cart: CartState }) =>
   state.cart.totalPrice;
 
