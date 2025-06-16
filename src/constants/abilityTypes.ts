@@ -6,8 +6,8 @@ export type Subject = "Product" | "Cart" | "Order" | "User";
 export interface AbilityRole {
   action: Actions;
   subject: Subject;
-  conditions?: Record<string, unknown>; // Опциональные условия для более сложных правил
-  inverted?: boolean; // Для запрещающих правил
+  conditions?: Record<string, unknown>;
+  inverted?: boolean;
 }
 
 export type AppAbility = PureAbility<[Actions, Subject]>;
