@@ -1,6 +1,8 @@
-import { useContext } from "react";
-import { AbilityContext } from "@components/auth/AbilityContext.tsx";
+import { useAppSelector } from "@hooks/redux";
+import { defineAbilityFor } from "@components/auth/abilityTypes";
+import React from "react";
 
-export const useAbility = () => {
-  return useContext(AbilityContext);
-};
+export function useAbility() {
+  const role = useAppSelector((state) => state.auth.role ?? "user");
+  return React.useMemo(() => defineAbilityFor(role), [role]);
+}

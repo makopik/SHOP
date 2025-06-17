@@ -1,13 +1,27 @@
-import { Layout } from "antd";
-import { PureAbility } from "@casl/ability";
-import { getUserRoles } from "@constants/abilityRoles.ts";
+import { Layout, Spin } from "antd";
 import { AbilityContext } from "@components/auth/AbilityContext.tsx";
 import { Header } from "@core/Layout/Header/Header.tsx";
+import { PermissionDemo } from "@pages/PermissionDemo.tsx";
+import { useAbility } from "@/hooks/useAbility.ts";
 
 const { Content } = Layout;
 
 export default function App() {
-  const ability = new PureAbility(getUserRoles());
+  const ability = useAbility();
+
+  if (!ability) {
+    return (
+      <Layout
+        style={{
+          minHeight: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spin size="large" tip="Загрузка прав доступа..." />
+      </Layout>
+    );
+  }
 
   return (
     <AbilityContext.Provider value={ability}>
@@ -19,6 +33,7 @@ export default function App() {
             background: "#fff",
           }}
         >
+          <PermissionDemo />
           {/*пока пусто нет страниц */}
         </Content>
       </Layout>

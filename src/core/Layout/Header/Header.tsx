@@ -1,19 +1,18 @@
-import { useAbility } from "@/hooks/useAbility.ts";
-import { useState } from "react";
-import { getAdminRoles, getUserRoles } from "@constants/abilityRoles.ts";
 import { Layout, Space, Switch, Typography } from "antd";
+import { useAppDispatch, useAppSelector } from "@hooks/redux.ts";
+import { setRole } from "@core/store/slices/authSlice.ts";
 
 const { Header: AntHeader } = Layout;
 const { Title } = Typography;
 
 export function Header() {
-  const ability = useAbility();
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const role = useAppSelector((state) => state.auth.role);
+
+  const isAdmin = role === "admin";
 
   const toggleRole = () => {
-    const newRole = !isAdmin;
-    setIsAdmin(newRole);
-    ability.update(newRole ? getAdminRoles() : getUserRoles());
+    dispatch(setRole(isAdmin ? "user" : "admin"));
   };
 
   return (
