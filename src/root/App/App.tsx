@@ -1,7 +1,6 @@
 import { Layout, Spin } from "antd";
 import { AbilityContext } from "@components/auth/AbilityContext.tsx";
 import { Header } from "@core/Layout/Header/Header.tsx";
-import { PermissionDemo } from "@pages/PermissionDemo.tsx";
 import { useAbility } from "@/hooks/useAbility.ts";
 
 const { Content } = Layout;
@@ -33,7 +32,6 @@ export default function App() {
             background: "#fff",
           }}
         >
-          <PermissionDemo />
           {/*пока пусто нет страниц */}
         </Content>
       </Layout>
