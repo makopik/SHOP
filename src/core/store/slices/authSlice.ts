@@ -1,12 +1,14 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+type Role = "admin" | "user";
+
 type AuthState = {
-  role: "admin" | "user" | null;
+  role: Role | null;
   isAuth: boolean;
 };
 
 const initialState: AuthState = {
-  role: null,
+  role: "user",
   isAuth: false,
 };
 
@@ -22,8 +24,11 @@ const authSlice = createSlice({
       state.role = null;
       state.isAuth = false;
     },
+    setRole(state, action: PayloadAction<"admin" | "user">) {
+      state.role = action.payload;
+    },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setRole } = authSlice.actions;
 export default authSlice.reducer;

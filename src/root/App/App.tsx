@@ -1,34 +1,40 @@
-import { useState } from 'react'
-import reactLogo from '@assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Layout, Spin } from "antd";
+import { AbilityContext } from "@components/auth/AbilityContext.tsx";
+import { Header } from "@core/Layout/Header/Header.tsx";
+import { useAbility } from "@/hooks/useAbility.ts";
 
-export default function  App() {
-  const [count, setCount] = useState(0)
+const { Content } = Layout;
+
+export default function App() {
+  const ability = useAbility();
+
+  if (!ability) {
+    return (
+      <Layout
+        style={{
+          minHeight: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spin size="large" tip="Загрузка прав доступа..." />
+      </Layout>
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AbilityContext.Provider value={ability}>
+      <Layout style={{ minHeight: "100vh" }}>
+        <Header />
+        <Content
+          style={{
+            padding: "24px",
+            background: "#fff",
+          }}
+        >
+          {/*пока пусто нет страниц */}
+        </Content>
+      </Layout>
+    </AbilityContext.Provider>
+  );
 }
-

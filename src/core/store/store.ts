@@ -10,6 +10,7 @@ export const store = configureStore({
     auth: authReducer,
     cart: cartReducer,
     notifications: notificationsReducer,
+
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),
