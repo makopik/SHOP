@@ -1,3 +1,3 @@
-export const PathSegment = {
+export const pathSegment = {
   PRODUCTS: "products",
 } as const;

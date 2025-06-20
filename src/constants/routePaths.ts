@@ -1,8 +1,8 @@
 import { createRootPath } from "@utils/createRootPath.ts";
-import { PathSegment } from "@constants/pathSegment.ts";
+import { pathSegment } from "@constants/pathSegment.ts";
 
 export const ROUTE_PATHS = {
   MAIN: "SHOP/",
-  PRODUCTS: createRootPath(PathSegment.PRODUCTS),
-  PRODUCTS_ID: `${createRootPath(PathSegment.PRODUCTS)}/:id`,
+  PRODUCTS: createRootPath(pathSegment.PRODUCTS),
+  PRODUCTS_ID: `${createRootPath(pathSegment.PRODUCTS)}/:id`,
 };
