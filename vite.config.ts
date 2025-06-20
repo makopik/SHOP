@@ -5,6 +5,7 @@ import path, { resolve } from "path";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/SHOP/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -23,7 +24,12 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
+      output: {
+        manualChunks: { react: ["react", "react-dom"], antd: ["antd"] },
+      },
+
       input: {
         main: resolve(__dirname, "index.html"),
         404: resolve(__dirname, "404.html"),

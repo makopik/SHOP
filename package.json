@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/makopik/SHOP",
+  "homepage": "https://makopik.github.io/SHOP",
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
