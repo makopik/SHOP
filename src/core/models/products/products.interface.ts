@@ -10,7 +10,6 @@ export interface Product {
 
 interface Rating {
   rate: number;
-  count: number;
 }
 export type ProductsResponse = Product[];
 
@@ -18,4 +17,8 @@ export interface ProductsQueryParams {
   limit?: number;
   sort?: "asc" | "desc";
   category?: string;
+}
+export interface ProductsByCategoryParams
+  extends Omit<ProductsQueryParams, "category"> {
+  category: string;
 }

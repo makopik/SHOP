@@ -3,6 +3,7 @@ import type {
   Product,
   ProductsResponse,
   ProductsQueryParams,
+  ProductsByCategoryParams,
 } from "./products.interface.ts";
 import { HttpMethod } from "@core/enum/httpMetod.ts";
 import { API_URLS } from "@core/apiUrls/apiUrls.ts";
@@ -10,11 +11,25 @@ import { API_URLS } from "@core/apiUrls/apiUrls.ts";
 export const products = api.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query<ProductsResponse, ProductsQueryParams>({
-      query: (params) => ({
+      query: ({ limit, sort, category }) => ({
         url: API_URLS.PRODUCTS.BASE,
         params: {
-          limit: params.limit,
-          sort: params.sort,
+          limit,
+          sort,
+          ...(category && { category }),
+        },
+      }),
+    }),
+
+    getProductsByCategory: builder.query<
+      ProductsResponse,
+      ProductsByCategoryParams
+    >({
+      query: ({ sort, limit, category }) => ({
+        url: API_URLS.PRODUCTS.CATEGORIES(category!),
+        params: {
+          sort,
+          limit,
         },
       }),
     }),
@@ -39,6 +54,7 @@ export const products = api.injectEndpoints({
 
 export const {
   useGetProductsQuery,
+  useGetProductsByCategoryQuery,
   useGetProductByIdQuery,
   useAddProductMutation,
   useDeleteProductMutation,
