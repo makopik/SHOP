@@ -3,7 +3,6 @@ import {
   Row,
   Col,
   Spin,
-  Button,
   Select,
   Space,
   Typography,
@@ -11,7 +10,6 @@ import {
   Rate,
 } from "antd";
 import { Link } from "react-router-dom";
-import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import {
   useGetProductsByCategoryQuery,
@@ -23,6 +21,8 @@ import type {
 } from "@models/products/products.interface.ts";
 import { categoryTranslations } from "@constants/categoryTranslations.ts";
 import { ROUTE_PATHS } from "@constants/routePaths.ts";
+
+import { AddToCartButton } from "@components/Button/AddToCartButton/AddToCartButton.tsx";
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
@@ -120,15 +120,7 @@ export function ProductsPage() {
                     />
                   }
                   actions={[
-                    <Button
-                      type="primary"
-                      icon={<ShoppingCartOutlined />}
-                      onClick={(e) => {
-                        e.preventDefault();
-                      }}
-                    >
-                      В корзину
-                    </Button>,
+                    <AddToCartButton product={product} size="middle" />,
                   ]}
                 >
                   <Meta

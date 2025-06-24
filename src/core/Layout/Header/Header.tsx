@@ -1,8 +1,10 @@
-import { Layout, Menu, Space, Switch, Typography } from "antd";
+import { Badge, Layout, Menu, Space, Switch, Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.ts";
 import { setRole } from "@core/store/slices/authSlice.ts";
 import { ROUTE_PATHS } from "@constants/routePaths.ts";
 import { NavLink } from "react-router";
+import { selectTotalItems } from "@core/store/slices/cartSlices.ts";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const { Header: AntHeader } = Layout;
 const { Title } = Typography;
@@ -16,6 +18,7 @@ const pages: PageLink[] = [{ name: "Товары", link: ROUTE_PATHS.PRODUCTS }]
 export function Header() {
   const dispatch = useAppDispatch();
   const role = useAppSelector((state) => state.auth.role);
+  const totalItems = useAppSelector(selectTotalItems);
 
   const isAdmin = role === "admin";
 
@@ -63,8 +66,19 @@ export function Header() {
           </Menu.Item>
         ))}
       </Menu>
+      <Space size="middle" align="center">
+        <NavLink to={ROUTE_PATHS.CART}>
+          <Badge size="small" count={totalItems}>
+            <ShoppingCartOutlined
+              style={{
+                fontSize: 25,
+                color: "white",
+                verticalAlign: "middle",
+              }}
+            />
+          </Badge>
+        </NavLink>
 
-      <Space>
         <Switch
           checked={isAdmin}
           onChange={toggleRole}
