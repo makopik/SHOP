@@ -4,30 +4,29 @@ import { Header } from "@core/Layout/Header/Header.tsx";
 import { useAbility } from "@/hooks/useAbility.ts";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "@root/Router/Router.tsx";
-import { CartSync } from "@pages/CartPage/components/CartSync.tsx";
+import { useCartSync } from "@hooks/useCartSync.ts";
 
 const { Content } = Layout;
 
 export default function App() {
+  useCartSync();
   const ability = useAbility();
 
   return (
     <AbilityContext.Provider value={ability}>
-      <CartSync>
-        <BrowserRouter>
-          <Layout style={{ minHeight: "100vh" }}>
-            <Header />
-            <Content
-              style={{
-                padding: "24px",
-                background: "#fff",
-              }}
-            >
-              <Router />
-            </Content>
-          </Layout>
-        </BrowserRouter>
-      </CartSync>
+      <BrowserRouter>
+        <Layout style={{ minHeight: "100vh" }}>
+          <Header />
+          <Content
+            style={{
+              padding: "24px",
+              background: "#fff",
+            }}
+          >
+            <Router />
+          </Content>
+        </Layout>
+      </BrowserRouter>
     </AbilityContext.Provider>
   );
 }

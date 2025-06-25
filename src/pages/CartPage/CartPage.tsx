@@ -13,7 +13,6 @@ import {
   message,
   Pagination,
 } from "antd";
-import { useCartSync } from "@pages/CartPage/hooks/useCartSync.ts";
 import {
   clearCart,
   removeFromCart,
@@ -31,7 +30,6 @@ const { Title, Text } = Typography;
 const PAGE_SIZE = 4;
 
 export function CartPage() {
-  useCartSync();
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
   const items = useAppSelector(selectCartItems);
