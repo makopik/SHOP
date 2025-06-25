@@ -4,10 +4,12 @@ import { Header } from "@core/Layout/Header/Header.tsx";
 import { useAbility } from "@/hooks/useAbility.ts";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "@root/Router/Router.tsx";
+import { useCartSync } from "@hooks/useCartSync.ts";
 
 const { Content } = Layout;
 
 export default function App() {
+  useCartSync();
   const ability = useAbility();
 
   return (

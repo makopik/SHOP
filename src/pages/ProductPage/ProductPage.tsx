@@ -1,8 +1,10 @@
-import { Spin, Alert, Typography, Rate, Button, Row, Col } from "antd";
+import { Spin, Alert, Typography, Rate, Row, Col } from "antd";
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "@models/products/endpoints.ts";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+
 import { categoryTranslations } from "@constants/categoryTranslations.ts";
+
+import { AddToCartButton } from "@components/Button/AddToCartButton/AddToCartButton.tsx";
 const { Title, Text } = Typography;
 
 export function ProductPage() {
@@ -68,9 +70,7 @@ export function ProductPage() {
           />
 
           <div style={{ marginTop: 24 }}>
-            <Button type="primary" size="large" icon={<ShoppingCartOutlined />}>
-              Добавить в корзину
-            </Button>
+            <AddToCartButton product={product} />
           </div>
 
           <div style={{ marginTop: 32 }}>
