@@ -4,6 +4,7 @@ import type {
   ProductsResponse,
   ProductsQueryParams,
   ProductsByCategoryParams,
+  ProductFormValue,
 } from "./products.interface.ts";
 import { HttpMethod } from "@core/enum/httpMetod.ts";
 import { API_URLS } from "@core/apiUrls/apiUrls.ts";
@@ -19,6 +20,7 @@ export const products = api.injectEndpoints({
           ...(category && { category }),
         },
       }),
+      providesTags: ["Product"],
     }),
 
     getProductsByCategory: builder.query<
@@ -32,17 +34,34 @@ export const products = api.injectEndpoints({
           limit,
         },
       }),
+      providesTags: ["Product"],
     }),
+
     getProductById: builder.query<Product, number>({
       query: (id) => API_URLS.PRODUCTS.BY_ID(id),
     }),
-    addProduct: builder.mutation<Product, Partial<Product>>({
+
+    addProduct: builder.mutation<Product, ProductFormValue>({
       query: (body) => ({
         url: API_URLS.PRODUCTS.BASE,
         method: HttpMethod.POST,
         body,
       }),
+      invalidatesTags: ["Product"],
     }),
+
+    updateProduct: builder.mutation<
+      Product,
+      { id: number; body: Partial<Product> }
+    >({
+      query: ({ id, body }) => ({
+        url: API_URLS.PRODUCTS.BY_ID(id),
+        method: HttpMethod.PUT,
+        body,
+      }),
+      invalidatesTags: ["Product"],
+    }),
+
     deleteProduct: builder.mutation<void, number>({
       query: (id) => ({
         url: API_URLS.PRODUCTS.BY_ID(id),
@@ -57,5 +76,6 @@ export const {
   useGetProductsByCategoryQuery,
   useGetProductByIdQuery,
   useAddProductMutation,
+  useUpdateProductMutation,
   useDeleteProductMutation,
 } = products;
