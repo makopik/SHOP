@@ -9,10 +9,11 @@ interface AddToCartButtonProps {
   product: Product;
   size?: "large" | "middle" | "small";
   block?: boolean;
+  style?: React.CSSProperties;
 }
 
 export function AddToCartButton(props: AddToCartButtonProps) {
-  const { product, size = "large", block = false } = props;
+  const { product, size = "large", block = false, style } = props;
 
   const dispatch = useAppDispatch();
 
@@ -29,6 +30,7 @@ export function AddToCartButton(props: AddToCartButtonProps) {
         icon={<ShoppingCartOutlined />}
         onClick={handleAddToCart}
         block={block}
+        style={style}
       >
         Добавить в корзину
       </Button>

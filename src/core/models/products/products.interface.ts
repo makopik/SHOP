@@ -13,6 +13,8 @@ interface Rating {
 }
 export type ProductsResponse = Product[];
 
+export type ProductFormValue = Omit<Product, "id" | "rating">;
+
 export interface ProductsQueryParams {
   limit?: number;
   sort?: "asc" | "desc";
