@@ -5,6 +5,7 @@ import { ROUTE_PATHS } from "@constants/routePaths.ts";
 import { NavLink } from "react-router";
 import { selectTotalItems } from "@core/store/slices/cartSlices.ts";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+import { addNotification } from "@core/store/slices/notificationsSlice.ts";
 
 const { Header: AntHeader } = Layout;
 const { Title } = Typography;
@@ -21,7 +22,17 @@ export function Header() {
 
   const isAdmin = useAppSelector(selectIsAdmin);
   const toggleRole = () => {
-    dispatch(setRole(isAdmin ? "user" : "admin"));
+    const newRole = isAdmin ? "user" : "admin";
+    dispatch(setRole(newRole));
+
+    dispatch(
+      addNotification({
+        type: "success",
+        message: `Режим изменен`,
+        description: `Вы вошли как ${newRole === "admin" ? "администратор" : "пользователь"}`,
+        duration: 2,
+      }),
+    );
   };
 
   return (

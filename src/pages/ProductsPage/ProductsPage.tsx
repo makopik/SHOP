@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   Col,
-  message,
   Rate,
   Row,
   Select,
@@ -33,6 +32,7 @@ import {
   toggleVisibility,
 } from "@core/store/slices/productMetadataSlice.ts";
 import { selectIsAdmin } from "@core/store/slices/authSlice.ts";
+import { addNotification } from "@core/store/slices/notificationsSlice.ts";
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
@@ -79,9 +79,19 @@ export function ProductsPage() {
   const handleHideProduct = (id: number) => {
     try {
       dispatch(toggleVisibility(id));
-      message.success("Товар скрыт");
+      dispatch(
+        addNotification({
+          type: "success",
+          message: metadata[id]?.isHidden ? "Товар показан" : "Товар скрыт",
+        }),
+      );
     } catch {
-      message.error("Ошибка при скрытии товара");
+      dispatch(
+        addNotification({
+          type: "error",
+          message: "Ошибка изменения видимости",
+        }),
+      );
     }
   };
   if (isError) {
@@ -185,9 +195,9 @@ export function ProductsPage() {
                                   marginBottom: 4,
                                 }}
                               >
-                                {customPrice} ₽
-                                {productMeta.customPrice &&
-                                  productMeta.customPrice !== product.price && (
+                                {customPrice ?? product.price} ₽
+                                {customPrice &&
+                                  customPrice !== product.price && (
                                     <Text
                                       delete
                                       type="secondary"

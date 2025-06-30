@@ -10,7 +10,6 @@ import {
   Image,
   Popconfirm,
   Badge,
-  message,
   Pagination,
 } from "antd";
 import {
@@ -24,6 +23,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/redux.ts";
 import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { ROUTE_PATHS } from "@constants/routePaths.ts";
 import { useState } from "react";
+import { addNotification } from "@core/store/slices/notificationsSlice.ts";
 
 const { Title, Text } = Typography;
 
@@ -49,7 +49,12 @@ export function CartPage() {
   };
   const handleClearCart = () => {
     dispatch(clearCart());
-    message.success("Корзина очищена");
+    dispatch(
+      addNotification({
+        type: "success",
+        message: "Корзина очищена",
+      }),
+    );
   };
   return (
     <div className="container mx-auto px-4 py-8">

@@ -5,6 +5,7 @@ import { useAbility } from "@/hooks/useAbility.ts";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "@root/Router/Router.tsx";
 import { useCartSync } from "@hooks/useCartSync.ts";
+import { Notifications } from "@components/Notifications/Notifications";
 
 const { Content } = Layout;
 
@@ -16,6 +17,7 @@ export default function App() {
     <AbilityContext.Provider value={ability}>
       <BrowserRouter>
         <Layout style={{ minHeight: "100vh" }}>
+          <Notifications />
           <Header />
           <Content
             style={{
