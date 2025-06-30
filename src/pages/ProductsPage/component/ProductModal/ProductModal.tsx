@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Modal, InputNumber, message } from "antd";
+import { Modal, InputNumber } from "antd";
 import { useAppDispatch } from "@hooks/redux.ts";
 import { updatePrice } from "@core/store/slices/productMetadataSlice.ts";
 import type { Product } from "@models/products/products.interface.ts";
+import { addNotification } from "@core/store/slices/notificationsSlice.ts";
 
 interface PriceModalProps {
   visible: boolean;
@@ -28,12 +29,21 @@ export function ProductModal({ visible, product, onCancel }: PriceModalProps) {
 
     try {
       dispatch(updatePrice({ id: product.id, price }));
-      console.log("Price update action dispatched");
-      message.success("Цена успешно обновлена");
+      dispatch(
+        addNotification({
+          type: "success",
+          message: "Цена успешно обновлена",
+        }),
+      );
+
       onCancel();
-    } catch (error) {
-      console.error("Price update failed:", error);
-      message.error("Ошибка при обновлении цены");
+    } catch {
+      dispatch(
+        addNotification({
+          type: "error",
+          message: "Ошибка при обновлении цены",
+        }),
+      );
     }
   };
   return (

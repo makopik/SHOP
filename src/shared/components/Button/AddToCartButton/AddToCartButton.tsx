@@ -4,6 +4,7 @@ import { useAppDispatch } from "@hooks/redux";
 import { addToCart } from "@core/store/slices/cartSlices";
 import React from "react";
 import type { Product } from "@models/products/products.interface.ts";
+import { addNotification } from "@core/store/slices/notificationsSlice.ts";
 
 interface AddToCartButtonProps {
   product: Product;
@@ -19,7 +20,24 @@ export function AddToCartButton(props: AddToCartButtonProps) {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(addToCart(product));
+    try {
+      dispatch(addToCart(product));
+      dispatch(
+        addNotification({
+          type: "success",
+          message: "Товар добавлен в корзину",
+          description: `${product.title} успешно добавлен в вашу корзину`,
+        }),
+      );
+    } catch {
+      dispatch(
+        addNotification({
+          type: "error",
+          message: "Ошибка добавления",
+          description: "Не удалось добавить товар в корзину",
+        }),
+      );
+    }
   };
 
   return (
